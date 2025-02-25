@@ -117,8 +117,8 @@ public final class BarcodeCaptureActivity extends AppCompatActivity implements B
         Button btnBarcodeCaptureCancel = findViewById(R.id.btnBarcodeCaptureCancel);
         btnBarcodeCaptureCancel.setText(buttonText);
         btnBarcodeCaptureCancel.setOnClickListener(this);
-        // btnBarcodeCaptureCancel.setEnabled(true);
-        // btnBarcodeCaptureCancel.setClickable(true);
+        btnBarcodeCaptureCancel.setEnabled(true);
+        btnBarcodeCaptureCancel.setClickable(true);
 
         mPreview = findViewById(R.id.preview);
         mGraphicOverlay = findViewById(R.id.graphicOverlay);
