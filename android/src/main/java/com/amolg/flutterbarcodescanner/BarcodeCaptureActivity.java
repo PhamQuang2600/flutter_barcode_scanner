@@ -82,8 +82,6 @@ public final class BarcodeCaptureActivity extends AppCompatActivity implements B
     private ScaleGestureDetector scaleGestureDetector;
     private GestureDetector gestureDetector;
 
-    private ImageView imgViewBarcodeCaptureUseFlash;
-    private ImageView imgViewSwitchCamera;
 
     public static int SCAN_MODE = SCAN_MODE_ENUM.QR.ordinal();
 
@@ -98,7 +96,6 @@ public final class BarcodeCaptureActivity extends AppCompatActivity implements B
         OFF
     }
 
-    private int flashStatus = USE_FLASH.OFF.ordinal();
 
     /**
      * Initializes the UI and creates the detector pipeline.
@@ -387,7 +384,13 @@ public final class BarcodeCaptureActivity extends AppCompatActivity implements B
 
     @Override
     public void onClick(View v) {
-        
+        if (i == R.id.btnBarcodeCaptureCancel) {
+            Barcode barcode = new Barcode();
+            barcode.rawValue = "-1";
+            barcode.displayValue = "-1";
+            FlutterBarcodeScannerPlugin.onBarcodeScanReceiver(barcode);
+            finish();
+        }
     }
 
     private int getInverseCameraFacing(int cameraFacing) {
