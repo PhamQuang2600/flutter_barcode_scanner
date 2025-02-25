@@ -24,7 +24,8 @@
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:layout_alignParentBottom="true"
-        android:background="@android:color/black">
+        android:background="@android:color/black"
+        android:layout_below="@id/preview">
 
         <Button
             android:id="@+id/btnBarcodeCaptureCancel"
