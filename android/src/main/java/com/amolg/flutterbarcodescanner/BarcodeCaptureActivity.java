@@ -384,7 +384,7 @@ public final class BarcodeCaptureActivity extends AppCompatActivity implements B
 
     @Override
     public void onClick(View v) {
-        if (i == R.id.btnBarcodeCaptureCancel) {
+        if (v.getId() == R.id.btnBarcodeCaptureCancel) {
             Barcode barcode = new Barcode();
             barcode.rawValue = "-1";
             barcode.displayValue = "-1";
