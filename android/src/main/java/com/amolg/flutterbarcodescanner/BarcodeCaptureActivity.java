@@ -82,6 +82,8 @@ public final class BarcodeCaptureActivity extends AppCompatActivity implements B
     private ScaleGestureDetector scaleGestureDetector;
     private GestureDetector gestureDetector;
 
+    private ImageView imgViewBarcodeCaptureUseFlash;
+    private ImageView imgViewSwitchCamera;
 
     public static int SCAN_MODE = SCAN_MODE_ENUM.QR.ordinal();
 
@@ -96,6 +98,7 @@ public final class BarcodeCaptureActivity extends AppCompatActivity implements B
         OFF
     }
 
+    private int flashStatus = USE_FLASH.OFF.ordinal();
 
     /**
      * Initializes the UI and creates the detector pipeline.
@@ -117,8 +120,13 @@ public final class BarcodeCaptureActivity extends AppCompatActivity implements B
         Button btnBarcodeCaptureCancel = findViewById(R.id.btnBarcodeCaptureCancel);
         btnBarcodeCaptureCancel.setText(buttonText);
         btnBarcodeCaptureCancel.setOnClickListener(this);
-        btnBarcodeCaptureCancel.setEnabled(true);
-        btnBarcodeCaptureCancel.setClickable(true);
+
+        imgViewBarcodeCaptureUseFlash = findViewById(R.id.imgViewBarcodeCaptureUseFlash);
+        imgViewBarcodeCaptureUseFlash.setOnClickListener(this);
+        imgViewBarcodeCaptureUseFlash.setVisibility(FlutterBarcodeScannerPlugin.isShowFlashIcon ? View.VISIBLE : View.GONE);
+
+        imgViewSwitchCamera = findViewById(R.id.imgViewSwitchCamera);
+        imgViewSwitchCamera.setOnClickListener(this);
 
         mPreview = findViewById(R.id.preview);
         mGraphicOverlay = findViewById(R.id.graphicOverlay);
@@ -387,8 +395,7 @@ public final class BarcodeCaptureActivity extends AppCompatActivity implements B
     @Override
     public void onClick(View v) {
         int i = v.getId();
-        Log.d("BarcodeCaptureActivity", "Cancel button pressed" + i);
-        if (i == R.id.btnBarcodeCaptureCancel) {
+         if (i == R.id.btnBarcodeCaptureCancel) {
             Barcode barcode = new Barcode();
             barcode.rawValue = "-1";
             barcode.displayValue = "-1";
@@ -398,6 +405,14 @@ public final class BarcodeCaptureActivity extends AppCompatActivity implements B
     }
 
     private int getInverseCameraFacing(int cameraFacing) {
+        if (cameraFacing == CameraSource.CAMERA_FACING_FRONT) {
+            return CameraSource.CAMERA_FACING_BACK;
+        }
+
+        if (cameraFacing == CameraSource.CAMERA_FACING_BACK) {
+            return CameraSource.CAMERA_FACING_FRONT;
+        }
+
         // Fallback to camera at the back.
         return CameraSource.CAMERA_FACING_BACK;
     }
@@ -408,7 +423,18 @@ public final class BarcodeCaptureActivity extends AppCompatActivity implements B
      * @param isFlashToBeTurnOn
      */
     private void turnOnOffFlashLight(boolean isFlashToBeTurnOn) {
-        
+        try {
+            if (getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA_FLASH)) {
+                String flashMode = "";
+                flashMode = isFlashToBeTurnOn ? Camera.Parameters.FLASH_MODE_TORCH : Camera.Parameters.FLASH_MODE_OFF;
+
+                mCameraSource.setFlashMode(flashMode);
+            } else {
+                Toast.makeText(getBaseContext(), "Unable to access flashlight as flashlight not available", Toast.LENGTH_SHORT).show();
+            }
+        } catch (Exception e) {
+            Toast.makeText(getBaseContext(), "Unable to access flashlight.", Toast.LENGTH_SHORT).show();
+        }
     }
 
     private class CaptureGestureListener extends GestureDetector.SimpleOnGestureListener {
