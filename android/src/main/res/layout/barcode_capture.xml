@@ -9,15 +9,16 @@
 
     <com.amolg.flutterbarcodescanner.camera.CameraSourcePreview
         android:id="@+id/preview"
-        android:layout_width="match_parent"
         android:layout_above="@+id/layoutBottom"
+        android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <com.amolg.flutterbarcodescanner.camera.GraphicOverlay
             android:id="@+id/graphicOverlay"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="#44000000"/>
+            android:background="#44000000" />
+
     </com.amolg.flutterbarcodescanner.camera.CameraSourcePreview>
 
     <RelativeLayout
@@ -38,8 +39,7 @@
             android:layout_marginLeft="10dp"
             android:contentDescription="Switch camera"
             android:src="@drawable/ic_switch_camera"
-            android:layout_alignParentStart="true"
-            android:visibility="invisible"/> <!-- Chỉ ẩn đi thay vì xóa -->
+            android:layout_alignParentStart="true" />
 
         <ImageView
             android:id="@+id/imgViewBarcodeCaptureUseFlash"
@@ -47,8 +47,7 @@
             android:layout_height="48dp"
             android:layout_centerInParent="true"
             android:contentDescription="Flash button"
-            android:src="@drawable/ic_barcode_flash_off"
-            android:visibility="invisible"/> <!-- Chỉ ẩn đi thay vì xóa -->
+            android:src="@drawable/ic_barcode_flash_off" />
 
         <Button
             android:id="@+id/btnBarcodeCaptureCancel"
@@ -63,6 +62,6 @@
             android:background="@android:color/transparent"
             android:text="Cancel"
             android:textAllCaps="false"
-            android:textColor="@android:color/white"/>
+            android:textColor="@android:color/white" />
     </RelativeLayout>
 </RelativeLayout>
